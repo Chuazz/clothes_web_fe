@@ -1,0 +1,9 @@
+{
+	"faculty": "Khoa",
+
+	"field": {
+		"faculty": {
+			"dean": "Trưởng khoa"
+		}
+	}
+}

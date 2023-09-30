@@ -1,15 +1,15 @@
 'use client';
 
-import { API, LANGUAGE_OPTIONS, ROUTES, AUTH_TOKEN, TOKEN_EXPIRE, USER } from '@assets/configs';
+import { API, AUTH_TOKEN, ROUTES, TOKEN_EXPIRE, USER } from '@assets/configs';
 import { language, request } from '@assets/helpers';
 import { PageProps } from '@assets/types/UI';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Loader from '@resources/components/UI/Loader';
-import { Checkbox, Dropdown, InputText, Password } from '@resources/components/form';
+import { InputText, Password } from '@resources/components/form';
 import { useTranslation } from '@resources/i18n';
 import brand from '@resources/image/info/brand.png';
 import { useMutation } from '@tanstack/react-query';
-import { getCookie, setCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 import { usePathname, useRouter } from 'next/navigation';
 import { PrimeIcons } from 'primereact/api';
 import { Button } from 'primereact/button';

@@ -1,8 +1,8 @@
 import { MenuItemType } from '@assets/types/menu';
 import { TFunction } from 'i18next';
 import { FaArrowRightFromBracket, FaUser } from 'react-icons/fa6';
-import { LuLANGUAGE_OPTIONS } from 'react-icons/lu';
-import { LANGUAGE, LANGUAGE_OPTIONS, ROUTES } from '.';
+import { LuLanguages } from 'react-icons/lu';
+import { LANGUAGE, LANGUAGES, ROUTES } from '.';
 
 const getUserMenu = (t: TFunction, lng: string, pathName: string): MenuItemType[] => {
     const currLanguage = LANGUAGE[lng.toUpperCase()].label || t('language');
@@ -19,8 +19,8 @@ const getUserMenu = (t: TFunction, lng: string, pathName: string): MenuItemType[
             code: lng || 'language',
             parent: lng || 'language',
             label: currLanguage,
-            icon: <LuLANGUAGE_OPTIONS />,
-            items: LANGUAGE_OPTIONS.map((t) => ({
+            icon: <LuLanguages />,
+            items: LANGUAGES.map((t) => ({
                 ...t,
                 parent: 'language',
                 to: `/${t.code}${pathName || '/home'}`,

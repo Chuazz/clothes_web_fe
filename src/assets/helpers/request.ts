@@ -8,20 +8,19 @@ import _ from 'lodash';
 const request = axios.create({
     baseURL: ROUTES.base,
     headers: {
-        accept: 'text/plain',
         'Content-Type': 'application/json',
     },
 });
 
 request.interceptors.request.use(
     (config) => {
-        if (!config.headers.Authorization) {
-            const token = getCookie(AUTH_TOKEN);
+        // if (!config.headers.Authorization) {
+        //     const token = getCookie(AUTH_TOKEN);
 
-            if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
-            }
-        }
+        //     if (token) {
+        //         config.headers.Authorization = `Bearer ${token}`;
+        //     }
+        // }
 
         return config;
     },
@@ -45,7 +44,7 @@ const get = (path: string, configs?: AxiosRequestConfig) => {
     return response;
 };
 
-const post = (path: string, data: any, configs?: AxiosRequestConfig) => {
+const post = (path: string, data?: any, configs?: AxiosRequestConfig) => {
     const response = request.post(path, data, configs);
 
     return response;

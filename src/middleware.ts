@@ -7,9 +7,9 @@ const languages = LANGUAGES.map((t) => t.value);
 acceptLanguage.languages(languages);
 
 export const config = {
-    // matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)'],
+    matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)'],
     //comment if you dont want authentication
-    matcher: ['/'],
+    // matcher: ['/'],
 };
 
 export function middleware(req: NextRequest) {
@@ -27,7 +27,7 @@ export function middleware(req: NextRequest) {
         lng = acceptLanguage.get(req.headers.get('Accept-Language'));
     }
 
-    return NextResponse.redirect(new URL(`/vi/home`, req.url));
+    // return NextResponse.redirect(new URL(`/vi/home`, req.url));
 
     if (!req.cookies.has(AUTH_TOKEN) && !req.url.includes('/auth/sign-in')) {
         return NextResponse.redirect(new URL(`/vi/auth/sign-in`, req.url));

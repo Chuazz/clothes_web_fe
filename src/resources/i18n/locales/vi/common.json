@@ -21,9 +21,21 @@
     "remember_password": "Nhớ mật khẩu",
     "save": "Lưu",
     "search": "Tìm kiếm",
+    "search_product": "Tìm kiếm sản phẩm...",
     "sign_in": "Đăng nhập",
     "sign_in_to_continue": "Đăng nhập để tiếp tục",
     "sure_to_delete": "Bạn có chắc muốn xóa {{ obj }}",
     "update_at": "Cập nhập {{ obj }}",
-    "welcome_to_system": "Chào mừng đển với hệ thống"
+    "welcome_to_system": "Chào mừng đển với hệ thống",
+    "sole": "Đã bán",
+    "feedback": "Đánh giá",
+    "policy": "Chính sách",
+    "quantity": "Số lượng",
+    "available_product": "Sản phẩm có sẵn",
+    "buy_now": "Mua ngay",
+    "add_to_cart": "Thêm vào giỏ hàng",
+    "search_filter": "Bộ lọc tìm kiếm",
+    "category": "Danh mục",
+    "shop_address": "Nơi bán",
+    "price_range": "Khoảng giá"
 }

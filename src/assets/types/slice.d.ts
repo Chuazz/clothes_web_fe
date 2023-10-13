@@ -1,4 +1,6 @@
+import { ProductType } from '@assets/interface';
 import { OptionType } from './common';
+import { CartProductByShopType, CartProductType, UserType } from './cart';
 
 interface signInSliceType {
     account: string;
@@ -18,4 +20,19 @@ interface LANGUAGE_OPTIONSliceType {
     currLanguage: string;
 }
 
-export type { signInSliceType, MenuSliceType, LANGUAGE_OPTIONSliceType };
+interface filterSliceType {
+    categories_code?: string[];
+    min_price?: number;
+    max_price?: number;
+    locations_code?: string[];
+    keyword?: string;
+}
+
+interface cartSliceType {
+    products: CartProductType[];
+    totalPrice: number;
+    user: UserType | undefined;
+    productsByShop: CartProductByShopType[];
+}
+
+export type { signInSliceType, MenuSliceType, LANGUAGE_OPTIONSliceType, filterSliceType, cartSliceType };

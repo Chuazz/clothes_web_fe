@@ -1,34 +1,75 @@
+@import url('./themes/light.css');
+@import url('primereact/resources/primereact.min.css');
 @import url('primeflex/primeflex.css');
 @import url('primeicons/primeicons.css');
-@import url('primereact/resources/primereact.min.css');
-@import url('./themes/light.css');
+@import url('slick-carousel/slick/slick.css');
+@import url('slick-carousel/slick/slick-theme.css');
+@import url('./primereact.css');
 
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-	font-family: var(--font-family);
+    font-family: var(--font-family);
 }
 
 .p-overlaypanel-content {
-	padding: 0 !important;
+    padding: 0 !important;
 }
 
 .bg-transparent {
-	background-color: transparent;
+    background-color: transparent;
 }
 
 .bg-highlight {
-	background: var(--highlight-bg);
+    background: var(--highlight-bg);
 }
 
 .text-highlight {
-	color: var(--highlight-text-color);
+    color: var(--highlight-text-color);
 }
 
 .text-error {
-	color: var(--red-600);
+    color: var(--red-600);
+}
+
+a {
+    text-decoration: none !important;
+    color: var(--text-900);
+}
+
+ul {
+    list-style: none !important;
+}
+
+.hover-scale {
+    transition: transform 0.2s linear;
+
+    &:hover {
+        transform: scale(1.04);
+    }
+}
+
+.banner-dots {
+    transform: translateX(-50%);
+}
+
+.banner-pagination {
+    transition: all 0.5s linear !important;
+    border-radius: 999px !important;
+    width: 32px;
+    height: 8px;
+    background: var(--surface-700);
+}
+
+.slick-active .banner-pagination {
+    width: 50px;
+    background: var(--primary-color);
 }

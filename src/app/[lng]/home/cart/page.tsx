@@ -120,7 +120,7 @@ const CartPage = ({ params: { lng } }: PageProps) => {
             const data: any = {
                 payment_method: method,
                 status: 'N',
-                orderTotal: product.totalPrice,
+                order_total: product.totalPrice,
                 shop: {
                     id: product.shop_id,
                     name: product.shop_name,

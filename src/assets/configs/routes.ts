@@ -1,5 +1,5 @@
 const ROUTES = {
-    base: 'http://localhost:5157/api',
+    base: 'http://localhost:5231/api',
 
     admin: {
         home: '/home',

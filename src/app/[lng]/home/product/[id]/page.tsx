@@ -30,6 +30,7 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
     const dispatch = useDispatch();
     const toast = useRef<Toast>(null);
     const { t } = useTranslation(params.lng);
+    const { shop_id } = searchParams;
     const [qty, setQty] = useState(1);
     const user = JSON.parse(getCookie(AUTH_TOKEN)!) || {};
     const productDetailQuery = useQuery<ProductType>({
@@ -42,19 +43,18 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
     });
     const productUpdateMutate = useMutation({
         mutationFn: (data: any) => {
-            return request.update(`/Product/${productDetailQuery.data?.id}`, data);
+            return request.get(`/Product/${productDetailQuery.data?.id}`, data);
         },
     });
-    const { data: shopResponse, mutate: shopDetailMutate } = useMutation({
-        mutationFn: (data: any) => {
-            return request.post(`${ROUTES.admin.shop}/${data.id || '1'}`);
+    const { data: shop } = useQuery({
+        queryKey: ['shop_detail'],
+        queryFn: async () => {
+            const response = await request.get(`${ROUTES.admin.shop}/${shop_id}`);
+
+            return response.data;
         },
     });
     const [comment, setComment] = useState('');
-
-    useEffect(() => {
-        shopDetailMutate({ id: productDetailQuery?.data?.shop.id });
-    }, [shopDetailMutate, productDetailQuery?.data]);
 
     const LeftInfo = () => (
         <Banner>
@@ -77,7 +77,7 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
                 rating: productDetailQuery.data?.rating,
                 shop_id: productDetailQuery.data?.shop.id,
                 shop_name: productDetailQuery.data?.shop.name,
-                shop_image: shopResponse?.data?.image,
+                shop_image: shop?.image,
                 qty,
             }),
         );
@@ -191,10 +191,10 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
     const ShopInfo = () => (
         <div className='flex align-items-center'>
             <div className='flex align-items-center gap-3'>
-                <Avatar image={shopResponse?.data?.image} shape='circle' size='xlarge' className='shadow-3' />
+                <Avatar image={shop?.image} shape='circle' size='xlarge' className='shadow-5' />
 
                 <div>
-                    <p className='font-semibold text-lg pb-3'>{shopResponse?.data.name}</p>
+                    <p className='font-semibold text-lg pb-3'>{shop?.name}</p>
 
                     <div className='flex align-items-center gap-2'>
                         <Button icon='pi pi-tags' size='small' label='Theo dõi' className='p-2' />
@@ -203,21 +203,15 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
                 </div>
             </div>
 
-            <Divider layout='vertical' className='px-3' />
-
-            <div className='flex flex-column gap-3'>
+            {/* <div className='flex flex-column gap-3'>
                 <div className='flex align-items-center'>
                     <p className='w-10rem text-gray-600'>Đánh giá</p>
-                    <p className='flex-1 text-red-600 font-semibold text-right'>
-                        {shopResponse?.data.products.length || 0}
-                    </p>
+                    <p className='flex-1 text-red-600 font-semibold text-right'>{shop?.products.length || 0}</p>
                 </div>
 
                 <div className='flex align-items-center'>
                     <p className='w-10rem text-gray-600'>Sản phẩm</p>
-                    <p className='flex-1 text-red-600 font-semibold text-right'>
-                        {shopResponse?.data.products.length || 0}
-                    </p>
+                    <p className='flex-1 text-red-600 font-semibold text-right'>{shop?.products.length || 0}</p>
                 </div>
             </div>
 
@@ -226,16 +220,14 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
             <div className='flex flex-column gap-3'>
                 <div className='flex align-items-center'>
                     <p className='w-10rem text-gray-600'>Người theo dõi</p>
-                    <p className='flex-1 text-red-600 font-semibold text-right'>
-                        {shopResponse?.data.follows_by.length || 0}
-                    </p>
+                    <p className='flex-1 text-red-600 font-semibold text-right'>{shop?.follows_by.length || 0}</p>
                 </div>
 
                 <div className='flex align-items-center'>
                     <p className='w-10rem text-gray-600'>Thời gian phản hồi</p>
                     <p className='flex-1 text-red-600 font-semibold'>trong vài giờ</p>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 

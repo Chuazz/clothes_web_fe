@@ -20,7 +20,7 @@ const HomePage = ({ params: { lng } }: PageProps) => {
     const productQuery = useQuery<ProductType[]>({
         queryKey: ['products', filter],
         queryFn: async () => {
-            const response = await request.post('/Product/GetFilter', filter);
+            const response = await request.post('/Product/filter', filter);
 
             return response.data || [];
         },
@@ -32,7 +32,7 @@ const HomePage = ({ params: { lng } }: PageProps) => {
                 <div className='p-1'>
                     <Link
                         className='bg-white border-round-xl shadow-5 overflow-hidden block hover-scale'
-                        href={`home/product/${item.id}/`}
+                        href={`home/product/${item.id}/?shop_id=${item.shop.id}`}
                     >
                         <Image src={item.image} imageClassName='w-full shadow-1' alt='' />
 

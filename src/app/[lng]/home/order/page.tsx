@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCookie } from 'cookies-next';
 import moment from 'moment';
 import { Button } from 'primereact/button';
+import { Chip } from 'primereact/chip';
 import { Dialog } from 'primereact/dialog';
 import { Divider } from 'primereact/divider';
 import { Image } from 'primereact/image';
@@ -58,19 +59,23 @@ const OrderPage = () => {
 
     const ProductItem = (item: any, index: number, products: any[]) => {
         return (
-            <>
-                <div key={Math.random().toString()} className='flex gap-3'>
+            <div key={Math.random().toString()}>
+                <div className='flex gap-3'>
                     <Image src={item.image} alt='' width='100' imageClassName='border-round shadow-4' />
 
                     <div className='flex flex-column justify-content-between py-1 '>
                         <p className='hover:text-primary cursor-pointer text-900'>{item.name}</p>
 
-                        <p className='font-semibold text-600'>Số lượng: {item.qty}</p>
+                        <div className='flex align-items-center justify-content-between'>
+                            <p className='font-semibold text-900'>Số lượng: {item.qty}</p>
+
+                            <Tag value={myString.formatVNDCurrency(item.price)} className='primary' />
+                        </div>
                     </div>
                 </div>
 
                 {index < products.length - 1 && <Divider />}
-            </>
+            </div>
         );
     };
 
@@ -98,16 +103,16 @@ const OrderPage = () => {
 
                     <Tag value={ORDER_STATUS[item.status.toLowerCase()]} className={bgColor} />
 
-                    <Tag value={myString.formatVNDCurrency(item.orderTotal)} className='primary' />
+                    <Tag value={myString.formatVNDCurrency(item.order_total)} className='primary' />
                 </div>
             );
         };
 
         return (
-            <Panel key={item.id} header={HeaderTemplate} toggleable={true} collapsed={true}>
+            <Panel key={Math.random().toString()} header={HeaderTemplate} toggleable={true} collapsed={true}>
                 <div className='flex align-content-center justify-content-between p-3 border-round bg-pink-50 mb-3 '>
                     <div className='flex align-items-center gap-2'>
-                        <Image src={item.shop.image} alt='' width='45' imageClassName='border-circle' />
+                        <Image src={item.shop.image} alt='' width='45' imageClassName='border-circle shadow-5' />
                         <p className='text-900 font-semibold hover:text-primary cursor-pointer'>{item.shop.name}</p>
                     </div>
 
@@ -234,11 +239,11 @@ const OrderPage = () => {
             </Dialog>
             <Loader show={orderQuery.isLoading} />
             <div className='border-round bg-white p-3'>
-                <p className='font-semibold text-lg pb-4'>Đơn hàng của bạn</p>
+                <p className='font-semibold text-lg'>Đơn hàng của bạn</p>
 
-                <div className='flex flex-column gap-4'>
-                    {orderQuery.data && orderQuery.data.length > 0 && orderQuery.data.map(OrderItem)}
-                </div>
+                {orderQuery.data && orderQuery.data.length > 0 && (
+                    <div className='flex flex-column gap-4 pt-4'>{orderQuery.data.map(OrderItem)}</div>
+                )}
             </div>
         </div>
     );

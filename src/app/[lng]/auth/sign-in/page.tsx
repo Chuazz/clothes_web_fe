@@ -9,6 +9,7 @@ import { InputText, Password } from '@resources/components/form';
 import { useTranslation } from '@resources/i18n';
 import { useMutation } from '@tanstack/react-query';
 import { setCookie } from 'cookies-next';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
@@ -38,9 +39,17 @@ const Page = ({ params: { lng } }: PageProps) => {
     const onSubmit = (data: any) => {
         signInMutation.mutate(data, {
             onSuccess(response) {
-                setCookie(AUTH_TOKEN, response.data, { expires: TOKEN_EXPIRE });
+                let user = response.data;
 
-                router.push(language.addPrefixLanguage(lng, ROUTES.admin.home));
+                setCookie(AUTH_TOKEN, user, { expires: TOKEN_EXPIRE });
+
+                console.log(response.data);
+
+                if (user.roll === 'admin') {
+                    router.push('http://localhost:4444/vi/home');
+                } else {
+                    router.push(language.addPrefixLanguage(lng, ROUTES.admin.home));
+                }
             },
         });
     };
@@ -121,9 +130,12 @@ const Page = ({ params: { lng } }: PageProps) => {
 								)}
 							/> */}
                             </div>
-                            <a className='font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-colors transition-duration-150'>
-                                {t('forgot_password')}
-                            </a>
+                            <Link
+                                className='font-medium text-blue-500 hover:text-blue-700 cursor-pointer transition-colors transition-duration-150'
+                                href={'/vi/auth/sign-up'}
+                            >
+                                Tạo tài khoản
+                            </Link>
                         </div>
 
                         <Button label={t('sign_in')} className='w-full font-medium py-3 ' rounded={true} />

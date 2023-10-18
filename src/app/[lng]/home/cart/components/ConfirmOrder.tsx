@@ -21,7 +21,7 @@ const ConfirmOrder = ({ lng, onConfirm }: ConfirmOrderProps) => {
     const cart = useSelector(selectCart);
 
     const orderItemTemplate = (product: CartProductType, index: number) => {
-        return product.onOrder ? (
+        return product.on_order ? (
             <div key={product.id + Math.random().toString()}>
                 <div className='flex flex-column gap-3'>
                     <div className='flex align-content-start justify-content-between gap-3'>
@@ -36,7 +36,7 @@ const ConfirmOrder = ({ lng, onConfirm }: ConfirmOrderProps) => {
                             severity='danger'
                             className='cursor-pointer'
                             onClick={() => {
-                                dispatch(cartSlice.actions.updateItem({ ...product, onOrder: false }));
+                                dispatch(cartSlice.actions.updateItem({ ...product, on_order: false }));
                                 dispatch(cartSlice.actions.calculateCart());
                             }}
                         />
@@ -49,7 +49,7 @@ const ConfirmOrder = ({ lng, onConfirm }: ConfirmOrderProps) => {
 
                     <div className='flex align-items-center gap-5 justify-content-between'>
                         <p className='w-5rem'>Đơn giá</p>
-                        <p>{myString.formatVNDCurrency(product.originalPrice!)}</p>
+                        <p>{myString.formatVNDCurrency(product.original_price!)}</p>
                     </div>
 
                     <div className='flex align-items-center gap-5 justify-content-between'>
@@ -66,11 +66,11 @@ const ConfirmOrder = ({ lng, onConfirm }: ConfirmOrderProps) => {
         <>
             <div className='flex flex-column'>{cart.products.map(orderItemTemplate)}</div>
 
-            {cart.products.filter((t) => t.onOrder).length > 0 && (
+            {cart.products.filter((t) => t.on_order).length > 0 && (
                 <div className='flex align-items-center justify-content-between'>
                     <p className='font-semibold'>Thành tiền</p>
 
-                    <p className='font-semibold text-primary text-lg'>{myString.formatVNDCurrency(cart.totalPrice)}</p>
+                    <p className='font-semibold text-primary text-lg'>{myString.formatVNDCurrency(cart.total_price)}</p>
                 </div>
             )}
 

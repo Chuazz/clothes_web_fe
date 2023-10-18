@@ -59,7 +59,7 @@ const CartPage = ({ params: { lng } }: PageProps) => {
     });
 
     const cartItemTemplate = (product: CartProductType, index: number) => {
-        return product.onOrder ? null : (
+        return product.on_order ? null : (
             <div
                 className={classNames('flex p-4 gap-4 p-overlay-badge border-top-1 border-red-500')}
                 key={product.id + Math.random().toString()}
@@ -93,7 +93,7 @@ const CartPage = ({ params: { lng } }: PageProps) => {
                             rounded={true}
                             size='small'
                             onClick={() => {
-                                dispatch(cartSlice.actions.updateItem({ ...product, onOrder: true }));
+                                dispatch(cartSlice.actions.updateItem({ ...product, on_order: true }));
                                 dispatch(cartSlice.actions.calculateCart());
                             }}
                         />
@@ -120,7 +120,7 @@ const CartPage = ({ params: { lng } }: PageProps) => {
             const data: any = {
                 payment_method: method,
                 status: 'N',
-                order_total: product.totalPrice,
+                order_total: product.total_price,
                 shop: {
                     id: product.shop_id,
                     name: product.shop_name,
@@ -137,7 +137,7 @@ const CartPage = ({ params: { lng } }: PageProps) => {
 
             createOrderMutation.mutate(data, {
                 onSuccess() {
-                    dispatch(cartSlice.actions.setItems(cart.products.filter((t) => !t.onOrder)));
+                    dispatch(cartSlice.actions.setItems(cart.products.filter((t) => !t.on_order)));
                     setActiveIndex(0);
                     setTitle('Thông tin đơn hàng');
                     toast.current?.show({
@@ -171,7 +171,7 @@ const CartPage = ({ params: { lng } }: PageProps) => {
                 </SplitterPanel>
                 <SplitterPanel size={50}>
                     <Panel header={title}>
-                        {cart.products.filter((t) => t.onOrder).length > 0 && (
+                        {cart.products.filter((t) => t.on_order).length > 0 && (
                             <>
                                 <Steps
                                     model={items}

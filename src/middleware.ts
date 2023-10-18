@@ -8,7 +8,6 @@ acceptLanguage.languages(languages);
 
 export const config = {
     matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)'],
-    //comment if you dont want authentication
     // matcher: ['/'],
 };
 
@@ -27,23 +26,28 @@ export function middleware(req: NextRequest) {
         lng = acceptLanguage.get(req.headers.get('Accept-Language'));
     }
 
-    // return NextResponse.redirect(new URL(`/vi/home`, req.url));
-
-    if (!req.cookies.has(AUTH_TOKEN) && !req.url.includes('/auth/sign-in')) {
-        return NextResponse.redirect(new URL(`/vi/auth/sign-in`, req.url));
+    if (!req.cookies.has(AUTH_TOKEN) && !req.url.includes('/auth/sign-in') && !req.url.includes('/auth/sign-up')) {
+        return NextResponse.redirect(new URL(`http://localhost:2222/vi/auth/sign-in`));
     }
 
     if (
         !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
         !req.nextUrl.pathname.startsWith('/_next')
     ) {
-        let route = NextResponse.redirect(new URL(`/${lng}/auth/sign-in${req.nextUrl.pathname}`, req.url));
+        let response = NextResponse.next();
+        let user = req.cookies.has(AUTH_TOKEN) ? req.cookies.get(AUTH_TOKEN) : undefined;
 
-        if (req.cookies.has(AUTH_TOKEN)) {
-            route = NextResponse.redirect(new URL(`/${lng}/home${req.nextUrl.pathname}`, req.url));
+        if (user) {
+            let userJson = JSON.parse(user.value);
+
+            if (userJson.roll === 'admin') {
+                response = NextResponse.redirect(new URL(`http://localhost:4444/vi/home${req.nextUrl.pathname}`));
+            } else if (userJson.roll === 'user') {
+                response = NextResponse.redirect(new URL(`/vi/home${req.nextUrl.pathname}`, req.url));
+            }
         }
 
-        return route;
+        return response;
     }
 
     if (req.headers.has('referer')) {
@@ -52,11 +56,11 @@ export function middleware(req: NextRequest) {
         const response = NextResponse.next();
 
         if (lngInReferer) {
-            response.cookies.set(COOKIE_LANGUAGE_NAME, lngInReferer, { maxAge: LANGUAGE_EXPIRE.getDay() });
+            response.cookies.set(COOKIE_LANGUAGE_NAME, lngInReferer, { maxAge: LANGUAGE_EXPIRE });
         }
 
         return response;
     }
 
-    return NextResponse.next();
+    // return NextResponse.redirect(new URL('/vi/home', req.url));
 }

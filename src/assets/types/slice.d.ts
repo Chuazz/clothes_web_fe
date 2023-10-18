@@ -30,7 +30,7 @@ interface filterSliceType {
 
 interface cartSliceType {
     products: CartProductType[];
-    totalPrice: number;
+    total_price: number;
     user: UserType | undefined;
     productsByShop: CartProductByShopType[];
 }

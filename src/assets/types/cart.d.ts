@@ -5,8 +5,8 @@ interface CartProductType {
     qty?: number;
     price?: number;
     rating?: number;
-    onOrder?: boolean;
-    originalPrice?: number;
+    on_order?: boolean;
+    original_price?: number;
     shop_id?: string;
     shop_name?: string;
     shop_image?: string;
@@ -16,7 +16,7 @@ interface CartProductByShopType {
     shop_id: ?string;
     shop_name?: string;
     shop_image?: string;
-    totalPrice?: number;
+    total_price?: number;
     products?: CartProductType[];
 }
 

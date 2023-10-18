@@ -7,7 +7,7 @@ import moment from 'moment';
 const initialCartState: cartSliceType = {
     products: [],
     user: undefined,
-    totalPrice: 0,
+    total_price: 0,
     productsByShop: [],
 };
 
@@ -59,25 +59,25 @@ const cartSlice = createSlice({
         },
         calculateCart: (state) => {
             const groupedProducts: CartProductType[] = [];
-            let totalPrice = 0;
+            let total_price = 0;
 
             state.products.forEach((product) => {
                 const existingItem = groupedProducts.find((item) => item.id === product.id);
 
                 if (existingItem) {
                     existingItem.qty! += product.qty!;
-                    existingItem.price! += product.originalPrice!;
+                    existingItem.price! += product.original_price!;
                 } else {
                     groupedProducts.push(product);
                 }
 
-                if (product.onOrder) {
-                    totalPrice += product.price!;
+                if (product.on_order) {
+                    total_price += product.price!;
                 }
             });
 
             state.products = groupedProducts;
-            state.totalPrice = totalPrice;
+            state.total_price = total_price;
 
             setCookie('cart_products', state.products, { expires: moment().add({ day: 360 }).toDate() });
         },
@@ -88,7 +88,7 @@ const cartSlice = createSlice({
                 const existingItem = groupedProducts.find((item) => item.shop_id === product.shop_id);
 
                 if (existingItem) {
-                    existingItem.totalPrice! += product.originalPrice! * product.qty!;
+                    existingItem.total_price! += product.original_price! * product.qty!;
                     existingItem.products?.push(product);
                 } else {
                     groupedProducts.push({
@@ -96,7 +96,7 @@ const cartSlice = createSlice({
                         shop_name: product.shop_name,
                         shop_image: product.shop_image,
                         products: [product],
-                        totalPrice: product.originalPrice! * product.qty!,
+                        total_price: product.original_price! * product.qty!,
                     });
                 }
             });

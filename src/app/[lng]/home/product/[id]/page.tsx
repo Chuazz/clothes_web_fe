@@ -72,7 +72,7 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
                 id: productDetailQuery.data?.id,
                 image: productDetailQuery.data?.image,
                 name: productDetailQuery.data?.name,
-                originalPrice: productDetailQuery.data?.price,
+                original_price: productDetailQuery.data?.price,
                 price: productDetailQuery.data?.price,
                 rating: productDetailQuery.data?.rating,
                 shop_id: productDetailQuery.data?.shop.id,
@@ -117,18 +117,6 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
                 <Divider />
 
                 <div className='flex flex-column gap-4'>
-                    <div className='flex'>
-                        <p className='text-600 w-10rem'>Chi tiết ngắn</p>
-
-                        <TextTruncate
-                            line={2}
-                            containerClassName='flex-1 text-justify'
-                            truncateText=''
-                            textTruncateChild={TruncateChild}
-                            text={productDetailQuery.data?.description}
-                        />
-                    </div>
-
                     <div className='flex align-items-center'>
                         <p className='text-600 w-10rem'>{t('quantity')}</p>
 
@@ -297,7 +285,11 @@ const ProductDetail = ({ params, searchParams }: PageProps) => {
             </Panel>
 
             <Panel header='MÔ TẢ SẢN PHẨM' toggleable={true} collapsed={false} id='product_description'>
-                <p>{productDetailQuery.data?.description}</p>
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: productDetailQuery.data?.description || '',
+                    }}
+                ></p>
             </Panel>
 
             <Panel header='ĐÁNH GIÁ SẢN PHẨM' toggleable={true} collapsed={false}>
